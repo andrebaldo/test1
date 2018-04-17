@@ -48,16 +48,17 @@ namespace StarWarsTestKneat
                 } while (!isNumeric);
 
 
-                if (isNumeric)
+                if (isNumeric && totalDistance > 0)
                 {
-                    var business = new Business();
+                    var business = new Orchestration();
                     business.FecthSWServerData(ConfigurationManager.AppSettings["SWBaseApiURI"] + "api/starships", totalDistance);
                     business.AllTasksFinished += Business_AllTasksFinished;
                     Console.Write("Please fecthing data from server...\n");
+                    kinfo = Console.ReadKey();
                 }
 
 
-                kinfo = Console.ReadKey();
+
             } while (kinfo.Key != ConsoleKey.Escape);
 
 

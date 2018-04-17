@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StarWarsTestKneat
 {
-    public class Business
+    public class Orchestration
     {
         public delegate void AllTasksFinishedDelegate();
         public event AllTasksFinishedDelegate AllTasksFinished;
@@ -20,6 +20,13 @@ namespace StarWarsTestKneat
 
             starshipsTask.ContinueWith((task) =>
             {
+                if (task.Status == TaskStatus.Faulted)
+                {
+                    Console.WriteLine("Something went wrong, check the internet conection.");
+                    AllTasksFinished();
+                    return;
+                }
+
                 PrintResultPage(task, totalDistance);
                 if (task.Result.next != null && task.Result.next != string.Empty)
                 {
@@ -55,4 +62,7 @@ namespace StarWarsTestKneat
             }
         }
     }
+
+
 }
+
